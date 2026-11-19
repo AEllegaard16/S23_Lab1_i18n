@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace ZombieParty.Models
@@ -8,29 +9,35 @@ namespace ZombieParty.Models
     {
         public int Id { get; set; }
 
-        [StringLength(20, MinimumLength = 5)]
+        [DisplayName("Name")]
+        [StringLength(20, MinimumLength = 5, ErrorMessage = "ValidationRange")]
         public string Name { get; set; }
 
-        [StringLength(255)]
+        [DisplayName("ShortDesc")]
+        [StringLength(255, ErrorMessage = "ValidationStringMax")]
         public string ShortDesc { get; set; }
 
-        [Range(1, 20, ErrorMessage = "{0} requires a value between {1} and {2}.")]
+        [DisplayName("Point")]
+        [Range(1, 20, ErrorMessage = "ValidationRange")]
         public int Point { get; set; }
 
+        [DisplayName("Force")]
         public int Force { get; set; }
 
         [ValidateNever]
+        [DisplayName("Image")]
         public string Image { get; set; }
 
         // FACULTATIF on peut formellement identifier le champ lien
         // sinon le champ de foreignKey sera auto généré dans la BD
-        [Display(Name = "Zombie Type")]
+        [DisplayName("ZombieType")]
         [ForeignKey("ZombieType")]
         public int ZombieTypeId { get; set; }
         [ValidateNever] 
         public virtual ZombieType? ZombieType { get; set; }
 
-        [ValidateNever] 
+        [ValidateNever]
+        [DisplayName("HuntingLogs")]
         public virtual List<HuntingLog> HuntingLogs { get; set; }
     }
 }

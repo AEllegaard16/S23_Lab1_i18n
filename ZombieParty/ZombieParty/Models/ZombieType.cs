@@ -7,13 +7,15 @@ namespace ZombieParty.Models
     public class ZombieType
     {
         public int Id { get; set; }
-        [DisplayName("Type Name")]
-        [StringLength(25, MinimumLength = 5)]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "{0} has to be filled.")]
+        [DisplayName("TypeName")]
+        [StringLength(25, MinimumLength = 5, ErrorMessage = "ValidationStringMinMax")]
         public string TypeName { get; set; }
 
-        [Range(2, 5, ErrorMessage = "{0} requires a value between {1} and {2}.")]
+        [DisplayName("Point")]
+        [Range(2, 5, ErrorMessage = "ValidationRange")]
         public int Point { get; set; }
+
+        [DisplayName("Zombies")]
         [ValidateNever]
         public virtual List<Zombie>? Zombies { get; set; }
     }
